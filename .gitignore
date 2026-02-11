@@ -1,0 +1,33 @@
+# Generated images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.mp4
+
+# State files
+.task-state.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Config (may contain sensitive data)
+config.json
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
