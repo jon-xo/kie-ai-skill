@@ -1,0 +1,7 @@
+{
+  "drive": {
+    "enabled": true,
+    "folder_id": "1jbW-jb0NXCSF2155JWU01HxXktzKiwJR",
+    "comment": "Set folder_id to upload generated images to Google Drive. Get folder ID from the URL when viewing the folder."
+  }
+}

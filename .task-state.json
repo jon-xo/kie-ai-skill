@@ -1,0 +1,95 @@
+{
+  "ccf0284506b15323426d09bc254ae569": {
+    "prompt": "cyberpunk robotic lobster with neon claws and circuit patterns",
+    "model": "nano-banana-pro",
+    "status": "success",
+    "created_at": 1770827668,
+    "updated_at": 1770827909,
+    "metadata": {
+      "resolution": "2K",
+      "aspect_ratio": "1:1"
+    },
+    "result": {
+      "images": [
+        "https://tempfile.aiquickdraw.com/h/ccf0284506b15323426d09bc254ae569_1770827813.png"
+      ]
+    }
+  },
+  "c9efaa219a04d2e530b18b6d0332eb25": {
+    "prompt": "simple red circle on white background",
+    "model": "google/nano-banana",
+    "status": "success",
+    "created_at": 1770827918,
+    "updated_at": 1770827929,
+    "metadata": {
+      "resolution": "1K",
+      "aspect_ratio": "1:1"
+    }
+  },
+  "f002f47d89bf9c97038f135dfb8403d8": {
+    "prompt": "blue square",
+    "model": "google/nano-banana",
+    "status": "success",
+    "created_at": 1770827992,
+    "updated_at": 1770828003,
+    "metadata": {
+      "resolution": "1K",
+      "aspect_ratio": "1:1"
+    }
+  },
+  "d362f5e689801585c0a6c00c68fec471": {
+    "prompt": "full lobster with claws up and tail in view in cyberpunk style",
+    "model": "nano-banana-pro",
+    "status": "success",
+    "created_at": 1770828438,
+    "updated_at": 1770828520,
+    "metadata": {
+      "resolution": "1K",
+      "aspect_ratio": "1:1"
+    }
+  },
+  "449831ed7dff82735f59da5277edd75b": {
+    "prompt": "full lobster with claws up and tail in view in cyberpunk style, 16-bit pixel art style, retro gaming aesthetic",
+    "model": "nano-banana-pro",
+    "status": "success",
+    "created_at": 1770828754,
+    "updated_at": 1770828786,
+    "metadata": {
+      "resolution": "1K",
+      "aspect_ratio": "1:1"
+    }
+  },
+  "4d865f724855119bf0b17386652a789a": {
+    "prompt": "full lobster with claws up and tail in view in cyberpunk style, 16-bit pixel art style, retro gaming aesthetic, no text, no letters, no words, no UI elements",
+    "model": "nano-banana-pro",
+    "status": "success",
+    "created_at": 1770828850,
+    "updated_at": 1770828883,
+    "metadata": {
+      "resolution": "1K",
+      "aspect_ratio": "1:1"
+    }
+  },
+  "a42fbf7726341142f3f73c54c124df25": {
+    "prompt": "red apple",
+    "model": "nano-banana-pro",
+    "status": "success",
+    "created_at": 1770829474,
+    "updated_at": 1770829502,
+    "metadata": {
+      "resolution": "1K",
+      "aspect_ratio": "1:1"
+    }
+  },
+  "43a26092896befe0a3d759911e86c752": {
+    "prompt": "simple green circle",
+    "model": "nano-banana-pro",
+    "status": "success",
+    "created_at": 1770829764,
+    "updated_at": 1770829797,
+    "metadata": {
+      "resolution": "1K",
+      "aspect_ratio": "1:1"
+    }
+  }
+}
