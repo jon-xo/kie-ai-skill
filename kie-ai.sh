@@ -76,25 +76,63 @@ case "${1:-help}" in
     ;;
   
   models)
-    echo "Available Models:"
-    echo ""
-    echo "IMAGE GENERATION:"
-    echo "  nano-banana-pro         - Gemini 3 Pro Image (1K/2K/4K, ~24 credits/image)"
-    echo "  google/nano-banana      - Gemini 2.5 Flash Image (basic, cheaper)"
-    echo "  google/nano-banana-edit - Image editing"
-    echo "  flux-kontext            - Black Forest Labs Flux (high quality)"
-    echo "  4o-image                - OpenAI GPT-4o Image"
-    echo ""
-    echo "VIDEO GENERATION:"
-    echo "  veo-3.1                 - Google Veo 3.1 (cinematic)"
-    echo "  veo-3.1-fast            - Google Veo 3.1 Fast (cheaper)"
-    echo "  runway-aleph            - Runway Gen-4 Aleph"
-    echo ""
-    echo "MUSIC GENERATION:"
-    echo "  suno-v4                 - Suno V4 (up to 8min tracks)"
-    echo "  suno-v4.5               - Suno V4.5 Plus"
-    echo ""
-    echo "See https://docs.kie.ai for full list and pricing"
+    MODELS_FILE="$SCRIPT_DIR/models.json"
+    
+    if [[ ! -f "$MODELS_FILE" ]]; then
+      echo "Error: models.json not found"
+      exit 1
+    fi
+    
+    # Check for optional flags
+    case "${2:-}" in
+      --json)
+        cat "$MODELS_FILE"
+        ;;
+      --category)
+        if [[ -z "${3:-}" ]]; then
+          echo "Usage: kie-ai.sh models --category <image|video|music|chat>"
+          exit 1
+        fi
+        python3 -c "
+import json, sys
+with open('$MODELS_FILE') as f:
+    data = json.load(f)
+category = '$3'
+if category not in data['models']:
+    print(f'Unknown category: {category}')
+    sys.exit(1)
+print(f'\n{category.upper()} MODELS:\n')
+for model_id, info in data['models'][category].items():
+    tested = '✓' if info.get('tested') else ' '
+    print(f'  [{tested}] {model_id:<25} - {info[\"name\"]}')
+    print(f'      {info[\"description\"]}')
+    print(f'      Credits: {info[\"credits\"]} (~{info[\"usd\"]})')
+    print()
+"
+        ;;
+      *)
+        python3 -c "
+import json
+with open('$MODELS_FILE') as f:
+    data = json.load(f)
+
+print('\n📊 Available Models')
+print(f'Last updated: {data[\"lastUpdated\"]}')
+print(f'Source: {data[\"source\"]}\n')
+
+for category, models in data['models'].items():
+    print(f'\n{category.upper()}:')
+    for model_id, info in models.items():
+        tested = '✓' if info.get('tested') else ' '
+        print(f'  [{tested}] {model_id:<25} {info[\"credits\"]:>15}  {info[\"usd\"]:>10}')
+        
+print('\n✓ = Tested and confirmed working')
+print('\nFor detailed info: ./kie-ai.sh models --category <image|video|music|chat>')
+print('For JSON output:   ./kie-ai.sh models --json')
+print('\nSee https://kie.ai/market for latest models')
+"
+        ;;
+    esac
     ;;
   
   balance)
