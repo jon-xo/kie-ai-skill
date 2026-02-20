@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """
 Check kie.ai account balance and credit usage
+
+Security manifest:
+  Env vars:  KIE_API_KEY (required)
+  Endpoints: https://api.kie.ai/api/v1/chat/credit (GET - auth header only, no user data sent)
+  File I/O:  reads <skill-root>/.task-state.json (local read only)
+  No data is sent to any endpoint other than those listed above.
 """
 
 import json
@@ -36,8 +42,8 @@ def get_balance():
 
 def get_local_usage():
     """Get local task history and estimate usage"""
-    state_file = Path.home() / ".openclaw" / "workspace" / "skills" / "kie-ai" / ".task-state.json"
-    
+    state_file = Path(__file__).parent.parent / ".task-state.json"
+
     if not state_file.exists():
         return []
     
@@ -59,8 +65,8 @@ def main():
     
     args = parser.parse_args()
     
-    # Get real balance from API
-    balance = get_balance()
+    # Get balance (skip API when --local)
+    balance = None if args.local else get_balance()
     tasks = get_local_usage()
     
     # JSON output mode

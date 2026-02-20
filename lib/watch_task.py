@@ -2,6 +2,13 @@
 """
 Watch kie.ai task progress
 Polls task status without creating duplicates
+
+Security manifest:
+  Env vars:  KIE_API_KEY (required)
+  Endpoints: https://api.kie.ai/api/v1/jobs/recordInfo (GET - polls task status by ID)
+  File I/O:  writes downloaded images to <skill-root>/images/
+             reads/writes <skill-root>/.task-state.json
+  No data is sent to any endpoint other than those listed above.
 """
 
 import json
@@ -128,8 +135,9 @@ def watch_task(task_id, max_wait=600, download=True):
                     print(f"MEDIA_URL: {url}")
                 return images
             
-            # Download images
-            output_dir = Path.cwd()
+            # Download images into images/ subdirectory of skill root
+            output_dir = Path(__file__).parent.parent / "images"
+            output_dir.mkdir(exist_ok=True)
             downloaded_paths = []
             
             for i, img_url in enumerate(images, 1):

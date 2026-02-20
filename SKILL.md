@@ -1,12 +1,26 @@
 ---
 name: kie-ai
+version: "1.0.0"
 description: |
-  Unified API access to multiple AI models via kie.ai - image generation (Nano Banana Pro, Flux), video (Veo 3.1), music (Suno), and more. 30-80% cheaper than official APIs with simple REST integration.
-compatibility: macOS, Linux, Windows (requires Python 3.6+)
+  Unified API access to multiple AI models via kie.ai - image generation (Nano Banana Pro, Flux, 4o-image) at 30-80% lower cost than official APIs. Includes local storage, Google Drive upload, usage tracking, and task resume.
+files:
+  - "kie-ai.sh"
+  - "lib/*"
+  - "models.json"
+  - "config.example.json"
 metadata:
   author: jon-xo
-  version: "1.0.0"
   repository: https://github.com/jon-xo/kie-ai-skill
+  clawdbot:
+    emoji: "🍌"
+    homepage: https://github.com/jon-xo/kie-ai-skill
+    primaryEnv: KIE_API_KEY
+    requires:
+      env:
+        - KIE_API_KEY
+        - MATON_API_KEY
+      bins:
+        - python3
 ---
 
 # kie.ai API Wrapper
@@ -16,11 +30,11 @@ Unified access to multiple AI models through kie.ai's API. Generate images, vide
 ## Features
 
 - 🎨 **Image Generation**: Nano Banana Pro (Gemini 3 Pro), Flux, 4o-image
-- 🎬 **Video Generation**: Veo 3.1, Runway Gen-4 Aleph
-- 🎵 **Music Generation**: Suno V4/V4.5
 - 📤 **Google Drive Upload**: Optional automatic upload to Drive folder
 - 📊 **Usage Tracking**: Local task history and cost estimation
-- 💾 **Local Storage**: All files saved locally before optional upload
+- 💾 **Local Storage**: All files saved to `images/` before optional upload
+- 🎬 **Video Generation** *(coming soon)*: Veo 3.1, Runway Gen-4 Aleph
+- 🎵 **Music Generation** *(coming soon)*: Suno V4/V4.5
 
 ## Quick Start
 
@@ -117,7 +131,7 @@ Options:
   --model <name>         Model: nano-banana-pro (default), google/nano-banana, flux-kontext, 4o-image
   --resolution <res>     Resolution: 1K (default), 2K, 4K
   --aspect <ratio>       Aspect ratio: 1:1 (default), 16:9, 9:16, 4:3, etc.
-  --upload-drive         Upload to Google Drive (requires config)
+  --upload-drive         Upload to Google Drive after generation (requires config)
 ```
 
 **Examples:**
@@ -194,10 +208,10 @@ Check exact costs at: https://docs.kie.ai/pricing
 
 ## File Storage
 
-Generated files are saved locally first:
+Generated files are saved to the `images/` directory (gitignored):
 
 ```
-~/src/kie-ai-skill/
+~/src/kie-ai-skill/images/
   2026-02-11-12-05-01-1.png
   2026-02-11-12-09-56-1.png
   ...
@@ -214,7 +228,7 @@ Format: `YYYY-MM-DD-HH-MM-SS-{index}.png`
 
 Tasks are tracked in:
 ```
-~/.openclaw/workspace/skills/kie-ai/.task-state.json
+~/src/kie-ai-skill/.task-state.json
 ```
 
 Used for:
@@ -227,16 +241,15 @@ Used for:
 ### Image Generation
 - `nano-banana-pro` - Gemini 3 Pro Image (1K/2K/4K)
 - `google/nano-banana` - Gemini 2.5 Flash Image (cheaper)
-- `google/nano-banana-edit` - Image editing
 - `flux-kontext` - Flux by Black Forest Labs
 - `4o-image` - OpenAI GPT-4o Image
 
-### Video Generation
+### Video Generation *(coming soon)*
 - `veo-3.1` - Google Veo 3.1 (cinematic)
 - `veo-3.1-fast` - Veo 3.1 Fast (cheaper)
 - `runway-aleph` - Runway Gen-4 Aleph
 
-### Music Generation
+### Music Generation *(coming soon)*
 - `suno-v4` - Suno V4 (up to 8min)
 - `suno-v4.5` - Suno V4.5 Plus
 
@@ -283,6 +296,39 @@ Generate a cyberpunk city image with kie.ai
 # The agent will run:
 cd ~/src/kie-ai-skill && ./kie-ai.sh generate-image "cyberpunk city"
 ```
+
+## Security
+
+### Environment Variables
+
+| Variable | Required | Purpose |
+|---|---|---|
+| `KIE_API_KEY` | Yes | Authenticates all requests to `api.kie.ai` |
+| `MATON_API_KEY` | No | Authenticates Google Drive uploads via `gateway.maton.ai` |
+
+### External Endpoints
+
+| Endpoint | Method | Data Sent | Used By |
+|---|---|---|---|
+| `https://api.kie.ai/api/v1/jobs/createTask` | POST | prompt, model, resolution, aspect ratio | `generate-image.py` |
+| `https://api.kie.ai/api/v1/jobs/recordInfo` | GET | task ID | `generate-image.py`, `watch_task.py` |
+| `https://api.kie.ai/api/v1/chat/credit` | GET | — (auth header only) | `balance.py` |
+| `https://gateway.maton.ai/google-drive/upload/...` | POST | image file bytes, filename | `upload-drive.py` (optional) |
+
+### Data Leaving This Machine
+
+- **Prompt text** is sent to `api.kie.ai` to generate images.
+- **Generated image files** are sent to `gateway.maton.ai` only when `--upload-drive` is explicitly passed.
+- **API keys** are transmitted as `Authorization: Bearer` headers and are never logged or written to disk by this skill.
+- No telemetry, analytics, or usage data is collected by this skill itself.
+
+### Trust Statement
+
+This skill sends data to two third-party services: [kie.ai](https://kie.ai) for AI generation and [maton.ai](https://maton.ai) as an OAuth gateway for Google Drive. Review their respective privacy policies before use. Drive upload is strictly opt-in via `--upload-drive`.
+
+### Autonomous Invocation
+
+This skill can be invoked autonomously by an OpenClaw agent when asked to generate images. It does not execute autonomously on its own — it must be called explicitly. To prevent autonomous invocation, remove the skill symlink from your OpenClaw workspace.
 
 ## Links
 

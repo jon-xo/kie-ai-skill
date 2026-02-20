@@ -8,11 +8,11 @@ Unified access to multiple AI models through [kie.ai](https://kie.ai)'s API. Gen
 ## Features
 
 - 🎨 **Image Generation**: Nano Banana Pro (Gemini 3 Pro), Flux, 4o-image
-- 🎬 **Video Generation**: Veo 3.1, Runway Gen-4 Aleph  
-- 🎵 **Music Generation**: Suno V4/V4.5
 - 📤 **Google Drive Upload**: Optional automatic upload to Drive folder
 - 📊 **Usage Tracking**: Local task history and cost estimation
-- 💾 **Local Storage**: All files saved locally before optional upload
+- 💾 **Local Storage**: All files saved to `images/` before optional upload
+- 🎬 **Video Generation** *(coming soon)*: Veo 3.1, Runway Gen-4 Aleph
+- 🎵 **Music Generation** *(coming soon)*: Suno V4/V4.5
 
 ## Quick Start
 
@@ -86,7 +86,7 @@ Options:
   --model <name>         Model (default: nano-banana-pro)
   --resolution <res>     1K, 2K, 4K (default: 1K)
   --aspect <ratio>       1:1, 16:9, 9:16, etc. (default: 1:1)
-  --upload-drive         Upload to Google Drive
+  --upload-drive         Upload to Google Drive after generation
 ```
 
 **Examples:**
@@ -163,12 +163,12 @@ Approximate costs (kie.ai vs official APIs):
 - `flux-kontext` - Flux by Black Forest Labs
 - `4o-image` - OpenAI GPT-4o Image
 
-### 🎬 Video Generation
+### 🎬 Video Generation *(coming soon)*
 - `veo-3.1` - Google Veo 3.1 (cinematic)
 - `veo-3.1-fast` - Veo Fast (cheaper)
 - `runway-aleph` - Runway Gen-4 Aleph
 
-### 🎵 Music Generation
+### 🎵 Music Generation *(coming soon)*
 - `suno-v4` - Suno V4 (up to 8min)
 - `suno-v4.5` - Suno V4.5 Plus
 
@@ -176,10 +176,10 @@ See https://docs.kie.ai for full list.
 
 ## File Storage
 
-Generated files are saved locally:
+Generated files are saved locally to the `images/` directory (gitignored):
 
 ```
-~/src/kie-ai-skill/YYYY-MM-DD-HH-MM-SS-{index}.png
+~/src/kie-ai-skill/images/YYYY-MM-DD-HH-MM-SS-{index}.png
 ```
 
 **Retention:**

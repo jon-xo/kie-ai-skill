@@ -9,7 +9,7 @@ import os
 import time
 from pathlib import Path
 
-STATE_FILE = Path.home() / ".openclaw" / "workspace" / "skills" / "kie-ai" / ".task-state.json"
+STATE_FILE = Path(__file__).parent.parent / ".task-state.json"
 
 
 def load_state():

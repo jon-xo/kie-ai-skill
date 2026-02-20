@@ -2,6 +2,13 @@
 """
 kie.ai Image Generation
 Wrapper for Nano Banana Pro and other image models
+
+Security manifest:
+  Env vars:  KIE_API_KEY (required)
+  Endpoints: https://api.kie.ai/api/v1/jobs/createTask (POST - sends prompt, model, settings)
+             https://api.kie.ai/api/v1/jobs/recordInfo  (GET  - polls task status by ID)
+  File I/O:  writes downloaded images to <skill-root>/images/
+  No data is sent to any endpoint other than those listed above.
 """
 
 import json
@@ -105,8 +112,9 @@ def wait_for_completion(task_id, max_wait=300):
                 images = result_data.get("resultUrls", result_data.get("images", []))
                 
                 if images:
-                    # Download right now
-                    output_dir = Path.cwd()
+                    # Download right now into images/ subdirectory of skill root
+                    output_dir = Path(__file__).parent.parent / "images"
+                    output_dir.mkdir(exist_ok=True)
                     downloaded_paths = []
                     
                     for i, img_url in enumerate(images, 1):
@@ -228,7 +236,6 @@ def main():
     parser.add_argument("--model", default="nano-banana-pro", help="Model to use")
     parser.add_argument("--resolution", default="1K", choices=["1K", "2K", "4K"], help="Resolution")
     parser.add_argument("--aspect", default="1:1", help="Aspect ratio (1:1, 16:9, 9:16, etc.)")
-    parser.add_argument("--output", help="Output file path")
     parser.add_argument("--upload-drive", action="store_true", help="Upload to Google Drive (requires config)")
     
     args = parser.parse_args()

@@ -21,7 +21,7 @@ COMMANDS:
   status                         Show active tasks
   models                         List available models
   balance                        Check credit balance
-  logs [limit]                   Show recent task logs
+  logs                           Show link to kie.ai task logs
   config                         Manage configuration (Google Drive, etc.)
   help                           Show this help
 
@@ -29,7 +29,6 @@ IMAGE GENERATION OPTIONS:
   --model <name>                 Model: nano-banana-pro (default), google/nano-banana, etc.
   --resolution <res>             Resolution: 1K (default), 2K, 4K
   --aspect <ratio>               Aspect ratio: 1:1 (default), 16:9, 9:16
-  --output <path>                Output file path (default: auto-generated)
   --upload-drive                 Upload to Google Drive (requires config.json setup)
 
 EXAMPLES:

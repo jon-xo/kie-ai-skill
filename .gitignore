@@ -32,3 +32,6 @@ config.json
 *.swp
 *.swo
 *~
+
+# Claude Code local settings
+.claude/

@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """
 Upload files to Google Drive via Maton API gateway.
+
+Security manifest:
+  Env vars:  MATON_API_KEY (required)
+  Endpoints: https://gateway.maton.ai/google-drive/upload/drive/v3/files (POST - sends file bytes and filename)
+  File I/O:  reads the local file specified as argument (read only)
+  No data is sent to any endpoint other than those listed above.
 """
 import sys
 import os
