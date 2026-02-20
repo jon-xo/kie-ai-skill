@@ -1,6 +1,6 @@
 ---
 name: kie-ai
-version: "1.0.0"
+version: 1.0.0
 description: |
   Unified API access to multiple AI models via kie.ai - image generation (Nano Banana Pro, Flux, 4o-image) at 30-80% lower cost than official APIs. Includes local storage, Google Drive upload, usage tracking, and task resume.
 files:
