@@ -1,4 +1,5 @@
-# Generated images
+# Generated images (stored locally in images/, never committed)
+images/
 *.png
 *.jpg
 *.jpeg
